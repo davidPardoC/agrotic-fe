@@ -6,4 +6,5 @@ export const FormWrapper = styled.div`
   border-radius: 4px;
   padding: 2rem;
   margin-top: 10vh;
+  background-color: white;
 `;
