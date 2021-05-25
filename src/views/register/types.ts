@@ -1,0 +1,6 @@
+export type RegisterForm = {
+    email:string;
+    firstName:string;
+    lastName:string;
+    password:string;
+}
