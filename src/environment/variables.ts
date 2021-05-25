@@ -1,1 +1,1 @@
-export const urlApi = 'http://localhost:443'
+export const urlApi = 'http://54.82.171.184:443'
