@@ -30,9 +30,16 @@ export const PlantsService = {
       fireErrorAlert(error);
     }
   },
-  async createPlant(plant: any) {
+  async createPlant(plant: any, file?: File) {
+    const formData = new FormData();
+    if (file) {
+      formData.append("file", file);
+    }
+    Object.entries(plant).forEach((data:any)=>{
+      formData.append(data[0], data[1])
+    })
     try {
-      const data = await axios.post("/plants/", plant);
+      const data = await axios.post("/plants/", formData);
       return data.data;
     } catch (error) {
       fireErrorAlert(error);

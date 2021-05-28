@@ -11,6 +11,8 @@ import { FormWrapper } from "./styled-components";
 
 export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => {
   const [previeImageSrc, setPreviewImageSrc] = useState("");
+  const [fileToUpload, setFileToUpload] = useState<File>();
+
   const [form] = Form.useForm();
   useEffect(() => {
     if (itemToUpdate) {
@@ -27,6 +29,7 @@ export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => 
 
   const handleImageChange = (e: File) => {
     if (e) {
+      setFileToUpload(e)
       const dataUrl = URL.createObjectURL(e);
       setPreviewImageSrc(dataUrl);
     }
@@ -40,7 +43,7 @@ export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => 
         delete formObject[item[0]];
       }
     });
-    const data = await PlantsService.createPlant(formObject);
+    const data = await PlantsService.createPlant(formObject, fileToUpload);
     setIsAddedPlant(data);
     hideModal()
   };
@@ -87,6 +90,7 @@ export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => 
             >
               Agregar Foto
             </Button>
+            
             <input
               hidden
               type="file"
