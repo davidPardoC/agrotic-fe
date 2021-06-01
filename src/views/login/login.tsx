@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../context/authContext";
 import { AuthService } from "../../services/auth-service";
-import wave from '../../assets/wave.svg'
+import wave from "../../assets/wave.svg";
+import { fireErrorAlert } from "../../utils/alerts";
 const LoginCard = styled.div`
   width: 100%;
   box-shadow: 1px 1px 5px black;
@@ -28,15 +29,22 @@ export const Login = () => {
   const { setToken, setUser } = useContext(AuthContext);
 
   const onFinish = async (values: { email: string; password: string }) => {
-    const token = await AuthService.login(values.email, values.password);
-    setToken(token);
-    setUser(jwtDecode(token));
+    try {
+      const token = await AuthService.login(values.email, values.password);
+      setToken(token);
+      setUser(jwtDecode(token));
+    } catch (error) {
+      fireErrorAlert(error.message);
+    }
   };
 
   return (
     <>
       <BackGroudWrapper>
-        <img src={wave} style={{width:'100%', height:'100%', objectFit:'cover'}}/>
+        <img
+          src={wave}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
       </BackGroudWrapper>
 
       <Row>

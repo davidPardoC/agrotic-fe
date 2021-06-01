@@ -10,7 +10,8 @@ export const AuthService = {
       localStorage.setItem("token", data.data.token);
       return data.data.token;
     } catch (error) {
-      fireErrorAlert(error);
+      throw new Error("Bad Credentials");
+      
     }
   },
 
