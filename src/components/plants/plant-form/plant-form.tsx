@@ -7,20 +7,34 @@ import { Button, Col, Form, Input, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useEffect, useState } from "react";
 import { PlantsService } from "../../../services/plants-service";
+import { fireSuccessAlert } from "../../../utils/alerts";
 import { FormWrapper } from "./styled-components";
 
-export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => {
+export const PlantForm = ({
+  itemToUpdate,
+  setIsAddedPlant,
+  hideModal,
+}: any) => {
   const [previeImageSrc, setPreviewImageSrc] = useState("");
   const [fileToUpload, setFileToUpload] = useState<File>();
 
   const [form] = Form.useForm();
   useEffect(() => {
     if (itemToUpdate) {
-      console.log(itemToUpdate);
-      form.setFieldsValue({ cientificName: "Valor aleatorio" });
-      form.setFieldsValue({ commonName: "Valor aleatorio" });
+      retrievePlantInfo(itemToUpdate);
     }
   }, []);
+
+  const retrievePlantInfo = async (id: string) => {
+    const plant = await PlantsService.getPlantById(id);
+    if (plant) {
+      if (plant.imgLink) setPreviewImageSrc(plant.imgLink);
+      Object.entries(plant).forEach((item) => {
+        const strig = `{"${item[0]}":"${item[1]}"}`;
+        form.setFieldsValue(JSON.parse(strig));
+      });
+    }
+  };
 
   const pickImage = () => {
     const element = document.getElementById("selectPhoto");
@@ -29,23 +43,45 @@ export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => 
 
   const handleImageChange = (e: File) => {
     if (e) {
-      setFileToUpload(e)
+      setFileToUpload(e);
       const dataUrl = URL.createObjectURL(e);
       setPreviewImageSrc(dataUrl);
     }
   };
 
   const registerPlant = async (values: any) => {
-    const formObject = values;
-    let tempArray = Object.entries(values);
-    tempArray.forEach((item) => {
-      if (item[1] === undefined) {
-        delete formObject[item[0]];
-      }
-    });
-    const data = await PlantsService.createPlant(formObject, fileToUpload);
-    setIsAddedPlant(data);
-    hideModal()
+    if (itemToUpdate) {
+      const formObject = values;
+      let tempArray = Object.entries(values);
+      tempArray.forEach((item) => {
+        if (item[1] === undefined) {
+          delete formObject[item[0]];
+        }
+      });
+      updatePlant(formObject);
+    } else {
+      const formObject = values;
+      let tempArray = Object.entries(values);
+      tempArray.forEach((item) => {
+        if (item[1] === undefined) {
+          delete formObject[item[0]];
+        }
+      });
+      const data = await PlantsService.createPlant(formObject, fileToUpload);
+      setIsAddedPlant(data);
+      hideModal();
+    }
+  };
+
+  const updatePlant = async (plant: any) => {
+    const response = await PlantsService.updatePlant(
+      itemToUpdate,
+      plant,
+      fileToUpload
+    );
+    if (response) {
+      fireSuccessAlert("Planta actualizada con exito");
+    }
   };
   return (
     <FormWrapper>
@@ -90,7 +126,7 @@ export const PlantForm = ({ itemToUpdate, setIsAddedPlant , hideModal}: any) => 
             >
               Agregar Foto
             </Button>
-            
+
             <input
               hidden
               type="file"

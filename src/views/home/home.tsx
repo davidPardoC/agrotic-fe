@@ -15,8 +15,9 @@ import {
 } from "./views/dashboard/styled-components";
 import { Plants } from "./views/plants";
 import { Settings } from "./views/settings";
+import {CampDataScreen} from './views/camp-data/camp-data';
 export const Home = () => {
-  let { path, url } = useRouteMatch();
+  let { path} = useRouteMatch();
   let history = useHistory();
   const [sidebarState, setSidebarState] = useState<boolean>(false);
 
@@ -39,6 +40,9 @@ export const Home = () => {
             </Route>
             <Route path={`${path}/settings`}>
               <Settings />
+            </Route>
+            <Route path={`${path}/camp-data/:id/:plant`}>
+              <CampDataScreen/>
             </Route>
             <Route path="*">
               <Redirect to={`${path}/plants`} />

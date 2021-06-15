@@ -3,8 +3,9 @@ import {
   DownloadOutlined,
   EditOutlined,
   QrcodeOutlined,
+  TableOutlined,
 } from "@ant-design/icons";
-import { Button, Pagination, Table } from "antd";
+import { Button, Pagination, Table, Tooltip } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { PlantsService } from "../../../services/plants-service";
@@ -12,14 +13,18 @@ import QRCode from "qrcode.react";
 import { QRWrapper } from "./styled-components";
 import { DateTime } from "luxon";
 import { PlantTableResponse } from "../../../services/types/plats-types";
+import { useHistory, useRouteMatch } from "react-router";
 export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
+  let history = useHistory();
+  let { path, url} = useRouteMatch();
   const [dataSource, setDataSource] = useState<PlantTableResponse>();
   const [tableResponse, setTableResponse] = useState<PlantTableResponse>();
+
   useEffect(() => {
     getDataTable();
   }, [isAddedPlant]);
 
-  const getDataTable = async (page=1) => {
+  const getDataTable = async (page = 1) => {
     const data = await PlantsService.getPlantsTable(page);
     setTableResponse(data);
     const tableResponse = data?.docs.map((item, i) => ({
@@ -40,6 +45,18 @@ export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
             style={{ fontSize: "1.4rem" }}
           />{" "}
           <DeleteItem item={item} getDataTable={getDataTable} />
+          <Tooltip title="Datos de Campo">
+            <TableOutlined
+              className="hover"
+              style={{ fontSize: "1.4rem", marginLeft: "0.5rem" }}
+              onClick={()=>{
+                let route = []
+                route = url.split('/')
+                route.pop()
+                history.push(`${route.join('/')+'/camp-data/'+item._id+'/'+item.commonName}`)
+              }}
+            />
+          </Tooltip>
         </div>
       ),
     }));

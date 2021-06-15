@@ -35,14 +35,39 @@ export const PlantsService = {
     if (file) {
       formData.append("file", file);
     }
-    Object.entries(plant).forEach((data:any)=>{
-      formData.append(data[0], data[1])
-    })
+    Object.entries(plant).forEach((data: any) => {
+      formData.append(data[0], data[1]);
+    });
     try {
       const data = await axios.post("/plants/", formData);
       return data.data;
     } catch (error) {
       fireErrorAlert(error);
+    }
+  },
+
+  async getPlantById(id: string): Promise<any> {
+    try {
+      const data = await axios.get(`/plants/${id}`);
+      return data.data;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  async updatePlant(id: string, plant: any, file?: File) {
+    const formData = new FormData();
+    if (file) {
+      formData.append("file", file);
+    }
+    Object.entries(plant).forEach((data: any) => {
+      formData.append(data[0], data[1]);
+    });
+    try {
+      const data = await axios.put(`/plants/${id}`, formData);
+      return data.data;
+    } catch (error) {
+      return false;
     }
   },
 };

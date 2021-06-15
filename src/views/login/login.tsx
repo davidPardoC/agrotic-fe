@@ -44,6 +44,7 @@ export const Login = () => {
         <img
           src={wave}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          alt='temp-img'
         />
       </BackGroudWrapper>
 
