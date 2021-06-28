@@ -8,5 +8,5 @@ export const ContentWrapper = styled.div`
 export const SwitchWrapper = styled.div`
     width: 100%;
     padding-left: 1rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
 `;

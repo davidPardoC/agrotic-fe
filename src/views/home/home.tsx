@@ -8,15 +8,12 @@ import {
 } from "react-router-dom";
 import { Header } from "../../components/home/header/header";
 import { Sidebar } from "../../components/home/sidebar/sidebar";
-import { Dashboard } from "./views/dashboard/dashboard";
-import {
-  ContentWrapper,
-  SwitchWrapper,
-} from "./views/dashboard/styled-components";
+import { Dashboard } from "../dashboard/dashboard";
 import { Plants } from "./views/plants";
 import { Settings } from "./views/settings";
 import {CampDataScreen} from './views/camp-data/camp-data';
-export const Home = () => {
+import  {SwitchWrapper, ContentWrapper} from '../styles/layout'
+ export const Home = () => {
   let { path} = useRouteMatch();
   let history = useHistory();
   const [sidebarState, setSidebarState] = useState<boolean>(false);
