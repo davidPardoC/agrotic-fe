@@ -23,7 +23,7 @@ export const CampDataChart = () => {
   }
   return (
     <div style={{width:'100%', height:'49%'}}>
-      <h3 style={{marginLeft:'2rem'}}>Datos de campo por creador:</h3>
+      <h3 style={{marginLeft:'2rem'}}>Datos de campo por fecha:</h3>
       <ResponsiveContainer width="100%" height="100%">
       <AreaChart
         width={500}

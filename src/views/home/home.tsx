@@ -10,7 +10,7 @@ import { Header } from "../../components/home/header/header";
 import { Sidebar } from "../../components/home/sidebar/sidebar";
 import { Dashboard } from "../dashboard/dashboard";
 import { Plants } from "./views/plants";
-import { Settings } from "./views/settings";
+import { Settings } from "../settings/settings";
 import {CampDataScreen} from './views/camp-data/camp-data';
 import  {SwitchWrapper, ContentWrapper} from '../styles/layout'
  export const Home = () => {
