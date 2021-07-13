@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { UserService } from "../../../services/user-service";
 import { Form, Input, Button, Divider } from "antd";
+import { AuthContext } from "../../../context/authContext";
 export const Profile = () => {
   const [form] = Form.useForm();
+  const {setUser} = useContext(AuthContext)
   useEffect(() => {
     getProfile();
   }, []);
@@ -15,32 +17,40 @@ export const Profile = () => {
       form.setFieldsValue({email:userProfile.email})
     }
   };
+  const updateProfile = async (values:any) => {
+    const user = await UserService.updateProfile(values)
+    setUser(user)
+  }
+
+  const updatePassword = async (values:any) => {
+    await UserService.updatePassword(values)
+  }
   return (
     <div style={{ width: "25%" }}>
-      <Form form={form} layout="vertical" onFinish={()=>{}}>
-        <Form.Item label="Nombre" name="firstName" rules={[{len:4}, {}]}>
+      <Form form={form} layout="vertical" onFinish={updateProfile}>
+        <Form.Item label="Nombre" name="firstName" rules={[{min:4}, {}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Apellido" name="lastName" rules={[{len:4}]}>
+        <Form.Item label="Apellido" name="lastName" rules={[{min:4}]}>
           <Input />
         </Form.Item>
-        <Form.Item label="Email" name="email"  rules={[{len:6}]}>
+        <Form.Item label="Email" name="email"  rules={[{min:6}]}>
           <Input type='email'/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" >Actualizar</Button>
+          <Button htmlType='submit' type="primary" >Actualizar</Button>
         </Form.Item>
       </Form>
       <Divider />
-      <Form layout="vertical">
-        <Form.Item label="Contraseña Anterior" name="password">
-          <Input />
+      <Form layout="vertical" onFinish={updatePassword}>
+        <Form.Item label="Contraseña Anterior" name="oldPassword" required  rules={[{required:true, message:'Requerido'}]} > 
+          <Input.Password />
         </Form.Item>
-        <Form.Item label="Nueva Contraseña" name="newPassword">
-          <Input />
+        <Form.Item required rules={[{min:6, message:'Mínimo 6 caracteres'}]}  label="Nueva Contraseña" name="newPassword">
+          <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button type="primary">Actualizar Contraseña</Button>
+          <Button htmlType='submit' type="primary">Actualizar Contraseña</Button>
         </Form.Item>
       </Form>
     </div>
