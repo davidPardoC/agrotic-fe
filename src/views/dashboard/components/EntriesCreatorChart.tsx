@@ -42,7 +42,7 @@ export const EntriesCreatorChart = () => {
           <XAxis dataKey="createdBy" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="amount" fill="#8884d8" />
+          <Bar dataKey="amount" fill="#1890FF" />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -52,8 +52,8 @@ export const EntriesDateChart = () => {
           <Line
             type="monotone"
             dataKey="amount"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="#1890FF"
+            fill="#1890FF"
           />
         </LineChart>
       </ResponsiveContainer>
