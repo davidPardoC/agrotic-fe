@@ -16,7 +16,7 @@ import { PlantTableResponse } from "../../../services/types/plats-types";
 import { useHistory, useRouteMatch } from "react-router";
 export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
   let history = useHistory();
-  let { path, url} = useRouteMatch();
+  let { path, url } = useRouteMatch();
   const [dataSource, setDataSource] = useState<PlantTableResponse>();
   const [tableResponse, setTableResponse] = useState<PlantTableResponse>();
 
@@ -49,11 +49,19 @@ export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
             <TableOutlined
               className="hover"
               style={{ fontSize: "1.4rem", marginLeft: "0.5rem" }}
-              onClick={()=>{
-                let route = []
-                route = url.split('/')
-                route.pop()
-                history.push(`${route.join('/')+'/camp-data/'+item._id+'/'+item.commonName}`)
+              onClick={() => {
+                let route = [];
+                route = url.split("/");
+                route.pop();
+                history.push(
+                  `${
+                    route.join("/") +
+                    "/camp-data/" +
+                    item._id +
+                    "/" +
+                    item.commonName
+                  }`
+                );
               }}
             />
           </Tooltip>
@@ -133,7 +141,8 @@ const ItemQr = ({ id }: any) => {
       >
         <QRWrapper>
           <QRCode
-            renderAs="svg"
+            id="qr-wrapper"
+            renderAs="canvas"
             value={id}
             style={{ width: "50%", height: "auto" }}
           />
@@ -142,6 +151,16 @@ const ItemQr = ({ id }: any) => {
             type="primary"
             icon={<DownloadOutlined />}
             style={{ marginTop: "1rem" }}
+            onClick={() => {
+              var canvas = document.getElementById("qr-wrapper");
+              var img = (canvas as any).toDataURL("image/png");
+              var link = document.createElement("a");
+              link.download = id+'.png';
+              link.href = img;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
           >
             Descargar
           </Button>
