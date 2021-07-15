@@ -48,8 +48,8 @@ export const Login = () => {
         />
       </BackGroudWrapper>
 
-      <Row>
-        <Col span={6} offset={9}>
+      <div style={{display:'flex', justifyContent:'center'}}>
+        <Col sm={12} md={6}>
           <LoginCard>
             <TitleCard>Iniciar Sesion</TitleCard>
             <Form layout={"vertical"} onFinish={onFinish}>
@@ -76,7 +76,7 @@ export const Login = () => {
             </Form>
           </LoginCard>
         </Col>
-      </Row>
+      </div>
     </>
   );
 };
