@@ -39,7 +39,7 @@ export const Sidebar = ({ sidebarState, switchTab }: Props) => {
           }}
           icon={<PictureOutlined style={iconStyle} />}
         >
-          Plants
+          Plantas
         </Menu.Item>
         <Menu.Item
           key={3}

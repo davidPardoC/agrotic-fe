@@ -153,7 +153,7 @@ export const PlantForm = ({
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Taxonomia" name="taxonomy">
+            <Form.Item label="Taxonomía" name="taxonomy">
               <TextArea />
             </Form.Item>
             <Form.Item label="Morfología" name="morfology">
@@ -165,16 +165,16 @@ export const PlantForm = ({
             <Form.Item label="Ciclo de vida" name="lifeCycle">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Zona de produccion Ecuador" name="productionZone">
+            <Form.Item label="Zona de producción Ecuador" name="productionZone">
               <TextArea />
             </Form.Item>
             <Form.Item label="Labores de cultivo" name="cultivationWork">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Preparacion del terreno" name="groundPreparation">
+            <Form.Item label="Preparación del terreno" name="groundPreparation">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Buena Asociacion" name="goodAssociation">
+            <Form.Item label="Buena Asociación" name="goodAssociation">
               <TextArea />
             </Form.Item>
             <Form.Item label="Riego" name="irrigation">
@@ -184,7 +184,7 @@ export const PlantForm = ({
               <TextArea />
             </Form.Item>
             <Form.Item
-              label="Recoleccion y almacenamiento"
+              label="Recolección y almacenamiento"
               name="recolectionAndStore"
             >
               <TextArea />
@@ -221,22 +221,22 @@ export const PlantForm = ({
             <Form.Item label="Semillero" name="hotBed">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Plantacion" name="plantation">
+            <Form.Item label="Plantación" name="plantation">
               <TextArea />
             </Form.Item>
             <Form.Item label="Mala Asosiacion" name="badAssociation">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Abonamiento y fertilizacion" name="composting">
+            <Form.Item label="Abonamiento y fertilización" name="composting">
               <TextArea />
             </Form.Item>
             <Form.Item label="Plagas y enfermedades" name="plagues">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Produccion promedio/ha " name="averageProduction">
+            <Form.Item label="Producción promedio/ha " name="averageProduction">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Uso y aplicacion " name="application">
+            <Form.Item label="Uso y aplicación " name="application">
               <TextArea />
             </Form.Item>
           </Col>
