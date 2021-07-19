@@ -1,5 +1,6 @@
 import {
   DashboardOutlined,
+  EnvironmentOutlined,
   PictureOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -43,6 +44,15 @@ export const Sidebar = ({ sidebarState, switchTab }: Props) => {
         </Menu.Item>
         <Menu.Item
           key={3}
+          onClick={() => {
+            switchTab("places");
+          }}
+          icon={<EnvironmentOutlined  style={iconStyle} />}
+        >
+          Lugares
+        </Menu.Item>
+        <Menu.Item
+          key={4}
           onClick={() => {
             switchTab("settings");
           }}

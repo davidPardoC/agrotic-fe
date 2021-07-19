@@ -13,6 +13,7 @@ import { Plants } from "./views/plants";
 import { Settings } from "../settings/settings";
 import {CampDataScreen} from './views/camp-data/camp-data';
 import  {SwitchWrapper, ContentWrapper} from '../styles/layout'
+import { Places } from "../places/places";
  export const Home = () => {
   let { path} = useRouteMatch();
   let history = useHistory();
@@ -37,6 +38,9 @@ import  {SwitchWrapper, ContentWrapper} from '../styles/layout'
             </Route>
             <Route path={`${path}/settings`}>
               <Settings />
+            </Route>
+            <Route path={`${path}/places`}>
+              <Places />
             </Route>
             <Route path={`${path}/camp-data/:id/:plant`}>
               <CampDataScreen/>
