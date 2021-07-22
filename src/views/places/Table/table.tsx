@@ -3,16 +3,24 @@ import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { PlacesServices } from "../../../services/places-service";
 
-export const PlacesTable = ({ refresh }: { refresh: boolean }) => {
+export const PlacesTable = ({
+  refreshTable,
+  refreshTableFlag,
+}: {
+  refreshTable: (value:boolean) => void;
+  refreshTableFlag: boolean;
+}) => {
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
     getData();
   }, []);
-  useEffect(() => {
-    if (!refresh) {
-      getData();
+
+  useEffect(()=>{
+    if(refreshTableFlag){
+      getData()
+      refreshTable(false)
     }
-  }, [refresh]);
+  },[refreshTableFlag])
   const getData = async () => {
     const data = await PlacesServices.getTable(1);
     if (data) {
@@ -38,11 +46,20 @@ const columns = [
     title: "Ubicacion",
     dataIndex: "coordenates",
     key: "coordenates",
-    render: (text: any) => (
-      <CompassFilled className="hover" onClick={()=>{
-          console.log(text)
-          window.open(`https://www.google.com/maps/search/?api=1&query=${text[0]},${text[1]}`)
-      }} style={{ fontSize: 25 }} />
-    ),
+    render: (text: any[]) =>
+      text.length === 2 ? (
+        <CompassFilled
+          className="hover"
+          onClick={() => {
+            console.log(text);
+            window.open(
+              `https://www.google.com/maps/search/?api=1&query=${text[0]},${text[1]}`
+            );
+          }}
+          style={{ fontSize: 25 }}
+        />
+      ) : (
+        <div></div>
+      ),
   },
 ];

@@ -1,12 +1,13 @@
 import { Form, Input, Button, Radio } from "antd";
 import { PlacesServices } from "../../../services/places-service";
 
-export const AddPlace = ({ closeModal }: any) => {
+export const AddPlace = ({ closeModal, refreshTable }: any) => {
   const createPlace = async (values: any) => {
     const formatedValues = { ...values };
     if(values.coordenates) formatedValues.coordenates = values.coordenates.split(",");
     const place = await PlacesServices.createPlace(formatedValues);
     if (place) {
+      refreshTable(true)
       closeModal();
     }
   };

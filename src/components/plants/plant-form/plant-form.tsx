@@ -3,7 +3,7 @@ import {
   SaveOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Collapse, Form, Input, Row, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Option } from "antd/lib/mentions";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import { PlacesServices } from "../../../services/places-service";
 import { PlantsService } from "../../../services/plants-service";
 import { fireSuccessAlert } from "../../../utils/alerts";
 import { FormWrapper } from "./styled-components";
-
+const { Panel } = Collapse;
 export const PlantForm = ({
   itemToUpdate,
   setIsAddedPlant,
@@ -148,87 +148,73 @@ export const PlantForm = ({
             />
           </Col>
         </Row>
-        <Row justify="space-around">
-          <Col md={11} xs={24}>
-            <Form.Item
-              rules={[{ required: true, message: "Campo requerido" }]}
-              name="place"
-              label="Lugar"
-              required={true}
-            >
-              <Select
-                showSearch
-                filterOption={(input, option: any) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {places.map((item: any, index: number) => (
-                  <Select.Option value={item._id} key={index + ""}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              label="Nombre Comun"
-              name="commonName"
-              rules={[{ required: true, message: "Campo requerido" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Nombre Cientifico"
-              name="cientificName"
-              rules={[{ required: true, message: "Campo requerido" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item label="Taxonomía" name="taxonomy">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Morfología" name="morfology">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Material Vegetal" name="vegetalMateria">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Ciclo de vida" name="lifeCycle">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Zona de producción Ecuador" name="productionZone">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Labores de cultivo" name="cultivationWork">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Preparación del terreno" name="groundPreparation">
-              <TextArea />
-            </Form.Item>
+        <Collapse defaultActiveKey={["1"]}>
+          <Panel header={"Información General"} key={"1"}>
+            <Row justify='space-around'>
+              <Col md={11} sm={24}>
+                <Form.Item
+                  rules={[{ required: true, message: "Campo requerido" }]}
+                  name="place"
+                  label="Lugar"
+                  required={true}
+                >
+                  <Select
+                    showSearch
+                    filterOption={(input, option: any) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {places.map((item: any, index: number) => (
+                      <Select.Option value={item._id} key={index + ""}>
+                        {item.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Nombre Comun"
+                  name="commonName"
+                  rules={[{ required: true, message: "Campo requerido" }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Nombre Cientifico"
+                  name="cientificName"
+                  rules={[{ required: true, message: "Campo requerido" }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Origen" name="origin">
+                  <Input />
+                </Form.Item>
+                <Form.Item label="Tamaño de planta" name="plantSize">
+                  <TextArea />
+                </Form.Item>
+              </Col>
+              <Col md={11} sm={24}>
+                <Form.Item label="Taxonomía" name="taxonomy">
+                  <TextArea />
+                </Form.Item>
+                <Form.Item label="Morfología" name="morfology">
+                  <TextArea />
+                </Form.Item>
+                <Form.Item label="Material Vegetal" name="vegetalMateria">
+                  <TextArea />
+                </Form.Item>
+                <Form.Item label="Ciclo de vida" name="lifeCycle">
+                  <TextArea />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Panel>
+          <Panel header="Entorno" key="2">
             <Form.Item label="Buena Asociación" name="goodAssociation">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Riego" name="irrigation">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Control malas hiervas" name="badHerbsControl">
-              <TextArea />
-            </Form.Item>
-            <Form.Item
-              label="Recolección y almacenamiento"
-              name="recolectionAndStore"
-            >
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Valor nutricional (100g)" name="nutritionalValue">
-              <TextArea />
-            </Form.Item>
-          </Col>
-          <Col md={11} xs={24}>
-            <Form.Item label="Origen" name="origin">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Tamaño de planta" name="plantSize">
+            <Form.Item label="Preparación del terreno" name="groundPreparation">
               <TextArea />
             </Form.Item>
             <Form.Item
@@ -249,19 +235,21 @@ export const PlantForm = ({
             <Form.Item label="Epoca de siembra" name="sowingTime">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Semillero" name="hotBed">
-              <TextArea />
-            </Form.Item>
-            <Form.Item label="Plantación" name="plantation">
+            <Form.Item label="Valor nutricional (100g)" name="nutritionalValue">
               <TextArea />
             </Form.Item>
             <Form.Item label="Mala Asosiacion" name="badAssociation">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Abonamiento y fertilización" name="composting">
+          </Panel>
+          <Panel key="3" header="Producción">
+            <Form.Item label="Labores de cultivo" name="cultivationWork">
               <TextArea />
             </Form.Item>
-            <Form.Item label="Plagas y enfermedades" name="plagues">
+            <Form.Item
+              label="Recolección y almacenamiento"
+              name="recolectionAndStore"
+            >
               <TextArea />
             </Form.Item>
             <Form.Item label="Producción promedio/ha " name="averageProduction">
@@ -270,8 +258,31 @@ export const PlantForm = ({
             <Form.Item label="Uso y aplicación " name="application">
               <TextArea />
             </Form.Item>
-          </Col>
-        </Row>
+            <Form.Item label="Zona de producción Ecuador" name="productionZone">
+              <TextArea />
+            </Form.Item>
+            <Form.Item label="Semillero" name="hotBed">
+              <TextArea />
+            </Form.Item>
+            <Form.Item label="Plantación" name="plantation">
+              <TextArea />
+            </Form.Item>
+          </Panel>
+          <Panel key="4" header="Cuidados">
+            <Form.Item label="Riego" name="irrigation">
+              <TextArea />
+            </Form.Item>
+            <Form.Item label="Control malas hiervas" name="badHerbsControl">
+              <TextArea />
+            </Form.Item>
+            <Form.Item label="Abonamiento y fertilización" name="composting">
+              <TextArea />
+            </Form.Item>
+            <Form.Item label="Plagas y enfermedades" name="plagues">
+              <TextArea />
+            </Form.Item>
+          </Panel>
+        </Collapse>
       </Form>
     </FormWrapper>
   );
