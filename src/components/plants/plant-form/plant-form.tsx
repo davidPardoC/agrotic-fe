@@ -3,9 +3,11 @@ import {
   SaveOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { Option } from "antd/lib/mentions";
 import { useEffect, useState } from "react";
+import { PlacesServices } from "../../../services/places-service";
 import { PlantsService } from "../../../services/plants-service";
 import { fireSuccessAlert } from "../../../utils/alerts";
 import { FormWrapper } from "./styled-components";
@@ -17,12 +19,14 @@ export const PlantForm = ({
 }: any) => {
   const [previeImageSrc, setPreviewImageSrc] = useState("");
   const [fileToUpload, setFileToUpload] = useState<File>();
-
+  const [places, setPlaces] = useState([]);
   const [form] = Form.useForm();
+
   useEffect(() => {
     if (itemToUpdate) {
       retrievePlantInfo(itemToUpdate);
     }
+    getPlaces();
   }, []);
 
   const retrievePlantInfo = async (id: string) => {
@@ -83,6 +87,13 @@ export const PlantForm = ({
       fireSuccessAlert("Planta actualizada con exito");
     }
   };
+
+  const getPlaces = async () => {
+    const places = await PlacesServices.getAllPlaces();
+    if (places) {
+      setPlaces(places);
+    }
+  };
   return (
     <FormWrapper>
       <Form form={form} layout="vertical" onFinish={registerPlant}>
@@ -139,6 +150,26 @@ export const PlantForm = ({
         </Row>
         <Row justify="space-around">
           <Col md={11} xs={24}>
+            <Form.Item
+              rules={[{ required: true, message: "Campo requerido" }]}
+              name="place"
+              label="Lugar"
+              required={true}
+            >
+              <Select
+                showSearch
+                filterOption={(input, option: any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
+              >
+                {places.map((item: any, index: number) => (
+                  <Select.Option value={item._id} key={index + ""}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
             <Form.Item
               label="Nombre Comun"
               name="commonName"

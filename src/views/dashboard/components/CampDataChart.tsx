@@ -22,7 +22,7 @@ export const CampDataChart = () => {
     }
   }
   return (
-    <div style={{width:'100%', height:'49%'}}>
+    <div style={{width:'100%', height:'45vh'}}>
       <h3 style={{marginLeft:'2rem'}}>Datos de campo por fecha:</h3>
       <ResponsiveContainer width="100%" height="100%">
       <AreaChart

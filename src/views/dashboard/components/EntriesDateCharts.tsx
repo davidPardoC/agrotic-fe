@@ -26,8 +26,8 @@ export const EntriesDateChart = () => {
   return (
     <div
       style={{
-        width: "50%",
-        height: "50%",
+        width: "100%",
+        height: "45vh",
         marginTop: "2rem",
         borderTop: "1px solid rgba(0,0,0,0.3)",
       }}

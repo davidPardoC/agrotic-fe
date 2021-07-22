@@ -4,7 +4,7 @@ import { PlacesServices } from "../../../services/places-service";
 export const AddPlace = ({ closeModal }: any) => {
   const createPlace = async (values: any) => {
     const formatedValues = { ...values };
-    formatedValues.coordenates = values.coordenates.split(",");
+    if(values.coordenates) formatedValues.coordenates = values.coordenates.split(",");
     const place = await PlacesServices.createPlace(formatedValues);
     if (place) {
       closeModal();
@@ -23,16 +23,22 @@ export const AddPlace = ({ closeModal }: any) => {
           label="Coordenadas"
           name="coordenates"
           rules={[
+            { required: false },
             {
               validator: (_, value) => {
-                if (value.split(",").length === 2) {
-                  if (value.split(",")[1]) {
-                    return Promise.resolve();
-                  }{
-                      return Promise.reject('Fomato Incorrecto')
-                  }
+                if (!value) {
+                  return Promise.resolve()
                 } else {
-                  return Promise.reject("Fomato Incorrecto");
+                  if (value.split(",").length === 2) {
+                    if (value.split(",")[1]) {
+                      return Promise.resolve();
+                    }
+                    {
+                      return Promise.reject("Fomato Incorrecto");
+                    }
+                  } else {
+                    return Promise.reject("Fomato Incorrecto");
+                  }
                 }
               },
             },

@@ -16,10 +16,10 @@ type Props = {
 
 export const Sidebar = ({ sidebarState, switchTab }: Props) => {
   return (
-    <div style={{ width: "auto" }}>
+    <div style={{ width: "auto", height:'max-content'}}>
       <Menu
         defaultSelectedKeys={["2"]}
-        style={{ height: "92.6vh" }}
+        style={{ height: "92.6vh"}}
         mode="inline"
         theme="dark"
         inlineCollapsed={sidebarState}

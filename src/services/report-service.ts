@@ -34,6 +34,14 @@ export const ReportService = {
       } catch (error) {
           return false;
       }
+  },
+  async getGeneralStatistics(){
+    try {
+      const data = await axios.get('/statistics/general')
+      return data.data
+    } catch (error) {
+      return false
+    }
   }
 };
 

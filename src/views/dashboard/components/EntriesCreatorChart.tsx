@@ -11,20 +11,28 @@ import {
 import { ReportService } from "../../../services/report-service";
 
 export const EntriesCreatorChart = () => {
-  const [data, setData] = useState([])
-  useEffect(()=>{
-    getChartData()
-  },[])
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getChartData();
+  }, []);
 
-  const getChartData = async() => {
-    const data = await ReportService.getEntriesByCreator()
-    if(data){
-      setData(data)
+  const getChartData = async () => {
+    const data = await ReportService.getEntriesByCreator();
+    if (data) {
+      setData(data);
     }
-  }
+  };
   return (
-    <div style={{width:'50%', height:'50%', marginTop:'2rem', borderTop:'1px solid rgba(0,0,0,0.3)', borderRight:'1px solid rgba(0,0,0,0.3)'}}>
-      <h3 style={{marginLeft:'2rem'}}>Entradas por creador:</h3>
+    <div
+      style={{
+        width: "100%",
+        height: "45vh",
+        marginTop: "2rem",
+        borderTop: "1px solid rgba(0,0,0,0.3)",
+        borderRight: "1px solid rgba(0,0,0,0.3)",
+      }}
+    >
+      <h3 style={{ marginLeft: "2rem" }}>Entradas por creador:</h3>
 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
