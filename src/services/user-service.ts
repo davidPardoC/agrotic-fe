@@ -35,6 +35,14 @@ export const UserService = {
     } catch (error) {
       fireErrorAlert(data?.data.response.message)
     }
+  },
+  async getAllUsers(){
+    try {
+      const data = await axios.get('/users')
+      return data.data;
+    } catch (error) {
+      fireErrorAlert(error.data.response.message)
+    }
   }
 };
 

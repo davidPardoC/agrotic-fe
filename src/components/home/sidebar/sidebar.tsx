@@ -5,7 +5,6 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { FC } from "react";
 
 const iconStyle = { fontSize: "1.3rem" };
 
@@ -15,10 +14,11 @@ type Props = {
 };
 
 export const Sidebar = ({ sidebarState, switchTab }: Props) => {
+
+
   return (
     <div style={{ width: "auto", height:'max-content'}}>
       <Menu
-        defaultSelectedKeys={["2"]}
         style={{ height: "92.6vh"}}
         mode="inline"
         theme="dark"

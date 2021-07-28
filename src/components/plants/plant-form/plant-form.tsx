@@ -191,7 +191,7 @@ export const PlantForm = ({
                   <Input />
                 </Form.Item>
                 <Form.Item label="Tamaño de planta" name="plantSize">
-                  <TextArea />
+                  <Input placeholder='metros (m)' />
                 </Form.Item>
               </Col>
               <Col md={11} sm={24}>

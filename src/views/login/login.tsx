@@ -1,7 +1,7 @@
 import { Col, Input, Row, Form, Button } from "antd";
 import jwtDecode from "jwt-decode";
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../context/authContext";
 import { AuthService } from "../../services/auth-service";
@@ -27,12 +27,13 @@ const BackGroudWrapper = styled.div`
 `;
 export const Login = () => {
   const { setToken, setUser } = useContext(AuthContext);
-
+const history = useHistory()
   const onFinish = async (values: { email: string; password: string }) => {
     try {
       const token = await AuthService.login(values.email, values.password);
       setToken(token);
       setUser(jwtDecode(token));
+      history.push('/home')
     } catch (error) {
       fireErrorAlert(error.message);
     }

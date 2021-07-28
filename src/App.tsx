@@ -5,11 +5,10 @@ import { HashRouter, Switch, Route, Link, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/authContext";
 import { Register } from "./views/register/register";
 import { Home } from "./views/home/home";
+import { PrivateRoute } from "./navigators/private-route";
 function App() {
-  const { token } = useContext(AuthContext);
   return (
     <HashRouter>
-      {!token ? (
         <Switch>
           <Route path="/signin">
             <Login />
@@ -17,20 +16,10 @@ function App() {
           <Route path="/signup">
             <Register />
           </Route>
-          <Route path='*'>
-            <Redirect to="/signin" />
-          </Route>
-        </Switch>
-      ) : (
-        <Switch>
-          <Route path='/home'>
+          <PrivateRoute path='/home'>
             <Home/>
-          </Route>
-          <Route path='*'>
-            <Redirect to="/home" />
-          </Route>
+          </PrivateRoute>
         </Switch>
-      )}
     </HashRouter>
   );
 }

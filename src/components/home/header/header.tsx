@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
+import { useHistory } from "react-router-dom";
 
 type Props = {
   sidebarState: boolean;
@@ -15,16 +16,18 @@ type Props = {
 
 export const Header = ({ setSidebarState, sidebarState }: Props) => {
   const { user, setToken } = useContext(AuthContext);
-
+  const history = useHistory()
   const logout = () => {
     localStorage.removeItem("token");
-    setToken("");
+    history.push('/signin')
+    /* 
+    setToken(""); */
   };
 
   const menu = () => {
     return (
       <Menu>
-        <Menu.Item key="1">Configuraciones</Menu.Item>
+        <Menu.Item key="1" onClick={()=>{history.push('/home/settings')}}>Configuraciones</Menu.Item>
         <Menu.Item
           key="2"
           onClick={() => {

@@ -17,7 +17,7 @@ export const AddPlace = ({ closeModal, refreshTable }: any) => {
         <Form.Item label="Nombre" name="name">
           <Input />
         </Form.Item>
-        <Form.Item label="Descripcion" name="desc">
+        <Form.Item label="Descripción" name="desc">
           <Input />
         </Form.Item>
         <Form.Item

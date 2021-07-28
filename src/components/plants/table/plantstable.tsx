@@ -5,7 +5,7 @@ import {
   QrcodeOutlined,
   TableOutlined,
 } from "@ant-design/icons";
-import { Button, Pagination, Table, Tooltip } from "antd";
+import { Button, Col, Pagination, Row, Select, Table, Tooltip } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { PlantsService } from "../../../services/plants-service";
@@ -14,18 +14,25 @@ import { QRWrapper } from "./styled-components";
 import { DateTime } from "luxon";
 import { PlantTableResponse } from "../../../services/types/plats-types";
 import { useHistory, useRouteMatch } from "react-router";
+import { UserService } from "../../../services/user-service";
+import { PlacesServices } from "../../../services/places-service";
 export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
   let history = useHistory();
   let { path, url } = useRouteMatch();
   const [dataSource, setDataSource] = useState<PlantTableResponse>();
   const [tableResponse, setTableResponse] = useState<PlantTableResponse>();
+  const [users, setUsers] = useState<any[]>([]);
+  const [places, setPlaces] = useState<any[]>([]);
+  const [curentUser, setCurrentUser] = useState('')
+  const [currentPlace, setCurrentPLace] = useState('')
 
   useEffect(() => {
+    getFilters()
     getDataTable();
   }, [isAddedPlant]);
 
-  const getDataTable = async (page = 1) => {
-    const data = await PlantsService.getPlantsTable(page);
+  const getDataTable = async (page = 1, place='',author='') => {
+    const data = await PlantsService.getPlantsTable(page,place,author);
     setTableResponse(data);
     const tableResponse = data?.docs.map((item, i) => ({
       ...item,
@@ -70,6 +77,13 @@ export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
     }));
     setDataSource(tableResponse as any);
   };
+
+  const getFilters = async() => {
+   const users = await UserService.getAllUsers()
+   setUsers(users)
+   const places = await PlacesServices.getAllPlaces()
+   setPlaces(places)
+  }
   const columns: any = [
     {
       title: "Nombre",
@@ -108,10 +122,38 @@ export const PlantsTable = ({ openUpdateModal, isAddedPlant }: any) => {
       responsive: ["xs", "md"],
     },
   ];
-
+  const handleUserFilter = (id:string)=>{
+    setCurrentUser(id)
+    getDataTable((tableResponse as any).page,currentPlace,id)
+  }
+  const handlePlaceFilter = (id:string) =>{
+    setCurrentPLace(id)
+    getDataTable((tableResponse as any).page,id,curentUser)
+  }
   return (
     <div>
+      <Row style={{marginBottom:'1rem'}}>
+        <Col md={6}>
+          <Select placeholder='Usuarios' defaultValue='' onChange={handleUserFilter} style={{width:'90%'}}>
+          <Select.Option   value={''}>All Users</Select.Option>
+            {users.map((user, index) => (
+              <Select.Option key={index}  value={user._id}>{user.firstName+''+user.lastName}</Select.Option>
+            ))}
+          </Select>
+        </Col>
+        <Col md={6}>
+          {" "}
+          <Select placeholder='Lugares' defaultValue='' onChange={handlePlaceFilter} style={{width:'90%'}}>
+          <Select.Option   value={''}>All Places</Select.Option>
+            {places.map((place, index) => (
+              <Select.Option key={index} value={place._id}>{place.name}</Select.Option>
+            ))}
+          </Select>
+        </Col>
+      </Row>
+
       <Table
+      style={{marginTop:'1rem'}}
         pagination={{ position: [] }}
         columns={columns}
         dataSource={dataSource as any}
@@ -155,7 +197,7 @@ const ItemQr = ({ id }: any) => {
               var canvas = document.getElementById("qr-wrapper");
               var img = (canvas as any).toDataURL("image/png");
               var link = document.createElement("a");
-              link.download = id+'.png';
+              link.download = id + ".png";
               link.href = img;
               document.body.appendChild(link);
               link.click();

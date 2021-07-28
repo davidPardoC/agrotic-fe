@@ -14,9 +14,9 @@ axios.interceptors.request.use(
 );
 
 export const PlantsService = {
-  async getPlantsTable(page: number): Promise<PlantTableResponse | undefined> {
+  async getPlantsTable(page: number, place:string, author:string): Promise<PlantTableResponse | undefined> {
     try {
-      const data = await axios.get(`/plants/table?page=${page}`);
+      const data = await axios.get(`/plants/table?page=${page}${place?'&place='+place:''}${author?'&author='+author:''}`);
       return data.data as PlantTableResponse;
     } catch (error) {
       fireErrorAlert(error);
