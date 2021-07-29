@@ -19,6 +19,9 @@ function App() {
           <PrivateRoute path='/home'>
             <Home/>
           </PrivateRoute>
+          <Route path='*'>
+            <Redirect to='/home'/>
+          </Route>
         </Switch>
     </HashRouter>
   );
